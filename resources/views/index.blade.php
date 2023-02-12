@@ -51,7 +51,7 @@
                                     <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     <span class="text-danger">{{ $errors->first('message') }}</span>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn" style="background-color:#00CC87;">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -66,6 +66,7 @@
                                             <th>content</th>
                                             <th>status</th>
                                             <th>Created at</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,6 +82,13 @@
                                             </td>
                                             <td>{{ $email->status }}</td>
                                             <td>{{ $email->created_at }}</td>
+                                            <td>
+                                                <form action="{{ route('delete_email', $email->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

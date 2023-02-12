@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\LogSentEmails;
+use App\Mail\Email;
 use App\Persons;
 use App\Rules\PhoneNumberRule;
 use Illuminate\Http\Request;
@@ -12,11 +13,6 @@ use Illuminate\Support\Facades\Mail;
 
 class PersonController extends Controller
 {
-    public function index()
-    {
-        $emails = DB::table('emails_log')->get();
-        return view('index', compact('emails'));
-    }
 
     public function send(Request $request)
     {
@@ -41,10 +37,7 @@ class PersonController extends Controller
         $person->message = $request->message;
 
         try {
-            Mail::send('email', $data, function ($message) use ($data) {
-                $message->from('codingchallange.swapcard@gmail.com', 'Coding-Challenge');
-                $message->to($data['email'], $data['name'])->subject('Coding-Challenge');
-            });
+            Mail::to($person->email)->send(new Email($data));
         } catch (\Exception $e) {
             $person->status = false;
 

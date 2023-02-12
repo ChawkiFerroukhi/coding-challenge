@@ -13,5 +13,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'PersonController@index')->name('index');
+Route::get('/', 'EmailsLogController@index')->name('index');
 Route::post('/send_email', 'PersonController@send')->name('send_email');
+Route::delete('/delete_email/{id}', 'EmailsLogController@delete')->name('delete_email');
